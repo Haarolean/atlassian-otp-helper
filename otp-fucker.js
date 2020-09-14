@@ -2,7 +2,7 @@
 // @name         OTP fucker
 // @namespace    http://fucktheotpbpc
 // @version      0.1
-// @description  Fucks the two factor authentication in BPC!
+// @description  Fucks the two factor authentication
 // @author       You
 // @match        https://rbs-develop.paymentgate.ru/*/plugins/servlet/twofactor/public/*
 // @grant        none
@@ -13,7 +13,7 @@
 (function() {
     'use strict';
     var baseurl='https://rbs-develop.paymentgate.ru/';
-    var secrets = [{location: 'bugs/', secret: '{Jira secret}'}, {location: 'wiki/', secret: '{Wiki secret}'}];
+    var secrets = [{location: 'bugs/', secret: ''}, {location: 'wiki/', secret: ''}];
     var secretToUse = '';
     secrets.forEach(function(secretInfo) {
         console.log('checking for ' + secretInfo.location);
@@ -26,5 +26,9 @@
     var totp = new jsOTP.totp();
     var otpCode = totp.getOtp(secretToUse);
     $('#2fpin').val(otpCode);
-    $('#d').submit();
+    if ($('#d').length == 1) {
+        $('#d').submit();
+    } else {
+        $('#totp-form').submit();
+    }
 ;})();
